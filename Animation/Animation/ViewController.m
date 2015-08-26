@@ -18,6 +18,8 @@
     UIButton *btnProfileDecision;
     UITableView *tblList;
     BOOL flag;
+    NSArray *arrImages;
+    int i;
 }
 
 @end
@@ -27,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]]];
-    
+    arrImages = @[@"profile_connected",@"profile_liked",@"profile_passed"];
 //    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 70, SCREEN_WIDTH-20, SCREEN_HEIGHT-120)];
 //    view.backgroundColor = [UIColor colorWithHue:drand48() saturation:2.0 brightness:1.0 alpha:1.0];
 //    currentViewTag = arc4random_uniform(74);
@@ -46,12 +48,7 @@
     [tblList setDelegate:self];
     [tblList setDataSource:self];
     [self.view addSubview:tblList];
-    
-    btnProfileDecision = [[UIButton alloc]initWithFrame:CGRectMake(-100, 70, 100, 40)];
-    btnProfileDecision.backgroundColor = [UIColor blackColor];
-    [btnProfileDecision setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btnProfileDecision setTitle:@"Status" forState:UIControlStateNormal];
-    [self.view addSubview:btnProfileDecision];
+    i=0;
 }
 
 //-(void)onContinue:(UIButton *)sender{
@@ -90,15 +87,30 @@
 //}
 
 -(void)onContinue:(UIButton *)sender{
-    if (!flag) {
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-            btnProfileDecision.frame = CGRectMake(SCREEN_WIDTH/2, -SCREEN_HEIGHT, 0, 0);
-        } completion:^(BOOL finished) {
-            btnProfileDecision.frame = CGRectMake(SCREEN_WIDTH - 150, 150, 100, 30);
-            [btnProfileDecision setTransform:CGAffineTransformRotate(btnProfileDecision.transform, -M_PI_2*0.5)];
-        }];
-        flag = YES;
+    UITableViewCell *cell = [tblList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    btnProfileDecision = [[UIButton alloc]initWithFrame:CGRectMake(-100, 0, 100, 40)];
+    btnProfileDecision.backgroundColor = [UIColor blackColor];
+    [btnProfileDecision setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [btnProfileDecision setTitle:@"Status" forState:UIControlStateNormal];
+    [btnProfileDecision setBackgroundImage:[UIImage imageNamed:[arrImages objectAtIndex:i]] forState:UIControlStateNormal];
+    if (i==2) {
+        i=0;
+    }else{
+        i++;
     }
+    [cell.contentView addSubview:btnProfileDecision];
+    
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        btnProfileDecision.frame = CGRectMake(cell.contentView.frame.size.width - 100, cell.contentView.frame.size.height - 120, 100, 30);
+        [btnProfileDecision setTransform:CGAffineTransformRotate(btnProfileDecision.transform, -M_PI_2*0.5)];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:1.5 animations:^{
+            btnProfileDecision.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [btnProfileDecision removeFromSuperview];
+        }];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
