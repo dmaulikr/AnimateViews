@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]]];
-    arrImages = @[@"profile_connected",@"profile_liked",@"profile_passed"];
+    arrImages = @[@"profile_connected_s",@"profile_liked_s",@"profile_passed_s"];
 //    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, 70, SCREEN_WIDTH-20, SCREEN_HEIGHT-120)];
 //    view.backgroundColor = [UIColor colorWithHue:drand48() saturation:2.0 brightness:1.0 alpha:1.0];
 //    currentViewTag = arc4random_uniform(74);
@@ -93,7 +93,7 @@
     btnProfileDecision.backgroundColor = [UIColor blackColor];
     [btnProfileDecision setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    [btnProfileDecision setTitle:@"Status" forState:UIControlStateNormal];
-    [btnProfileDecision setBackgroundImage:[UIImage imageNamed:[arrImages objectAtIndex:i]] forState:UIControlStateNormal];
+    [btnProfileDecision setImage:[UIImage imageNamed:[arrImages objectAtIndex:i]] forState:UIControlStateNormal];
     if (i==2) {
         i=0;
     }else{
